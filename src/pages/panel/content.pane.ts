@@ -9,53 +9,56 @@ export class ContentPane {
 
     parentPanelSelector = `.ContentPane`;
     contentPanelSelector = `${this.parentPanelSelector} .panel-group .panel-default`;
-    collapseItemXpath = "//div[contains(@id,'accordion')]//a";
-
     panelTitleSelector = (index: number) => `${this.contentPanelSelector}:nth-child(${index}) .panel-title`;
     panelBodySelector = (index: number) => `${this.contentPanelSelector}:nth-child(${index}) .panel-collapse`;
-    setItemLocator = (index: number) => `(//div[contains(@id,'accordion')]//a)[${index}]`;
 
-    async canAllItemsBeExpanded() {
-        let firstPlusIconXpath = this.setItemLocator(1) + "//span";
-        let firstItemEle = new Element(this.setItemLocator(1));
-        
-        let a1 = null;
-        let a2 = null;
-        let a3 = null;
+    async canAllItemsBeExpanded(): Promise<boolean> {
+        // wait for the content panel's appearance
+        await waitForElementVisible(this.parentPanelSelector);
 
-        // Select the first item and validate the first item canbe expanded.
-        await waitForElementVisible(firstPlusIconXpath);
-        await click(firstPlusIconXpath);
-        delay(500);
-        a1 = await this.isItemExpanded(firstItemEle);
-
-        // Select remaining items and validate each opened item will close when the next one is selected.
-        let listItems = new ElementList(this.collapseItemXpath);
+        // count the child panel
+        let listItems = new ElementList(this.contentPanelSelector);
         let totalItems = await listItems.count();
 
-        for (let i = 2; i < totalItems + 1; i++) {
-            let plusIconXpath = this.setItemLocator(i) + "//span";
-            await click(plusIconXpath);
-            delay(500);
+        for (let index = 1; index <= totalItems; index++) {
+            let titleSelector = this.panelTitleSelector(index);
+            // click to open an item by index
+            await scrollIntoViewIfNeeded(titleSelector);
+            await click(titleSelector);
+            await delay(1000);
 
-            let currentItemEle = new Element(this.setItemLocator(i));
-            let previousItemEle = new Element(this.setItemLocator(i - 1));
-            a2 = await this.isItemExpanded(currentItemEle);
-            a3 = await this.isItemCollapsed(previousItemEle);
-            if (a2 == false || a3 == false)
+            // check current item be expanded or not
+            let isExpanded = await this.isExpanded(this.panelBodySelector(index));
+            if (!isExpanded) {
+                let text = await getText(`${this.panelTitleSelector(index)} a`);
+                testContext.logger.error(`Item '${text}' is not expanded after clicking it.`);
                 return false;
-        };
-        return a1;
+            }
+            // check other item be collapsed or not
+            for (let other = 1; other <= totalItems; other++) {
+                if (other == index)
+                    continue;
+                let isCollapsed = await this.isCollapsed(this.panelBodySelector(other));
+                if (!isCollapsed) {
+                    let text = await getText(`${this.panelTitleSelector(other)} a`);
+                    testContext.logger.error(`Item '${text}' is not collapsed after another one is expanded.`);
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
-    async isItemExpanded(item: Element) {
-        let itemClass = await item.getAttribute("class");
-        return itemClass === "";
+    async isExpanded(selector: string): Promise<boolean> {
+        let element = new Element(selector);
+        let itemClass = await element.getAttribute("class");
+        return itemClass.includes("collapse in");
     }
 
-    async isItemCollapsed(item: Element) {
-        let itemClass = await item.getAttribute("class");
-        return itemClass === "collapsed";
+    async isCollapsed(selector: string): Promise<boolean> {
+        let element = new Element(selector);
+        let itemClass = await element.getAttribute("class");
+        return !itemClass.includes("collapse in");
     }
-
 }
