@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Playwright tests",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "vscode-debug",
+                "--",
+                "${fileBasename}"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Playwright Inspector",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "vscode-debug",
+                "--",
+                "${fileBasename}"
+            ],
+            "env": {
+                "PWDEBUG": "1",
+            }
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+[2022-08-29T13:33:39.541Z] info: Test Case Started : @Smoke Verify NEI home page information
+[2022-08-29T13:33:40.150Z] info: Executing Step : Navigate to Application
+[2022-08-29T13:33:53.393Z] info: Executing Step : Validate the current cities time and date is displayed
+[2022-08-29T13:33:54.175Z] info: Executing Step : Validate each opened service will close when the next one is selected
+[2022-08-29T13:34:14.677Z] info: Executing Step : Validate each opened expertise will close when the next one is selected
+[2022-08-29T13:34:23.165Z] info: Executing Step : Validate Read More link will open related article
+[2022-08-29T13:34:33.721Z] info: Executing Step : Close the browser
+[2022-08-29T13:34:34.636Z] info: Test Case Completed : @Smoke Verify NEI home page information Status : passed
+[2022-08-29T13:35:49.335Z] info: Test Case Started : @Smoke Verify NEI home page information
+[2022-08-29T13:35:49.797Z] info: Executing Step : Navigate to Application
+[2022-08-29T13:35:55.768Z] info: Executing Step : Validate the current cities time and date is displayed
+[2022-08-29T13:35:57.225Z] info: Executing Step : Validate each opened service will close when the next one is selected
+[2022-08-29T13:36:11.849Z] info: Executing Step : Validate each opened expertise will close when the next one is selected
+[2022-08-29T13:36:17.553Z] info: Executing Step : Validate Read More link will open related article
+[2022-08-29T13:36:26.016Z] info: Executing Step : Close the browser
+[2022-08-29T13:36:26.484Z] info: Test Case Completed : @Smoke Verify NEI home page information Status : passed
+[2022-08-29T13:42:12.124Z] info: Test Case Started : @Smoke Verify NEI home page information
+[2022-08-29T13:42:12.524Z] info: Executing Step : Navigate to Application
+[2022-08-29T13:42:22.748Z] info: Executing Step : Validate the current cities time and date is displayed
+[2022-08-29T13:42:23.530Z] info: Executing Step : Validate each opened service will close when the next one is selected
+[2022-08-29T13:42:34.259Z] info: Executing Step : Validate each opened expertise will close when the next one is selected
+[2022-08-29T13:42:38.239Z] info: Executing Step : Validate Read More link will open related article
+[2022-08-29T13:42:45.946Z] info: Executing Step : Close the browser
+[2022-08-29T13:42:46.408Z] info: Test Case Completed : @Smoke Verify NEI home page information Status : passed
